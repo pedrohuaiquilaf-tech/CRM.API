@@ -1,0 +1,23 @@
+{
+  "name": "CRM.API - .NET 8 + SQL Server",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:8.0",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "forwardPorts": [5000, 5001, 1433],
+  "postCreateCommand": "dotnet --version",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-mssql.mssql",
+        "humao.rest-client",
+        "patcx.vscode-nuget-gallery"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "CRM.API.sln"
+      }
+    }
+  }
+}
