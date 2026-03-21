@@ -12,4 +12,11 @@ public interface IRepository<T> where T : BaseEntity
     Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
     Task DeleteAsync(T entity, CancellationToken cancellationToken = default);
     Task<int> CountAsync(CancellationToken cancellationToken = default);
+    Task<int> CountAsync(Expression<Func<T, bool>>? filter, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<T>> GetPagedAsync(
+        int skip,
+        int take,
+        Expression<Func<T, bool>>? filter,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy,
+        CancellationToken cancellationToken = default);
 }

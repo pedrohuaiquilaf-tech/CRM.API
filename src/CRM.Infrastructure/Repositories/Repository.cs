@@ -57,4 +57,27 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         return await _dbSet.CountAsync(cancellationToken);
     }
+
+    public async Task<int> CountAsync(Expression<Func<T, bool>>? filter, CancellationToken cancellationToken = default)
+    {
+        IQueryable<T> query = _dbSet;
+        if (filter != null)
+            query = query.Where(filter);
+        return await query.CountAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<T>> GetPagedAsync(
+        int skip,
+        int take,
+        Expression<Func<T, bool>>? filter,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<T> query = _dbSet;
+        if (filter != null)
+            query = query.Where(filter);
+        if (orderBy != null)
+            query = orderBy(query);
+        return await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
+    }
 }
