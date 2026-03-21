@@ -14,6 +14,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Company> Companies => Set<Company>();
     public DbSet<Opportunity> Opportunities => Set<Opportunity>();
     public DbSet<Activity> Activities => Set<Activity>();
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

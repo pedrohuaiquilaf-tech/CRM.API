@@ -3,7 +3,9 @@ namespace CRM.API.Controllers;
 using CRM.Application.DTOs;
 using CRM.Application.Features.Opportunities.Commands;
 using CRM.Application.Features.Opportunities.Queries;
+using CRM.Domain.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -18,6 +20,7 @@ public class OpportunitiesController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Sales + "," + Roles.Viewer)]
     [ProducesResponseType(typeof(PaginatedResult<OpportunityDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(
         [FromQuery] int page = 1,
@@ -32,6 +35,7 @@ public class OpportunitiesController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Sales + "," + Roles.Viewer)]
     [ProducesResponseType(typeof(OpportunityDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -41,6 +45,7 @@ public class OpportunitiesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Sales)]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateOpportunityCommand command, CancellationToken cancellationToken)
@@ -50,6 +55,7 @@ public class OpportunitiesController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Sales)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -63,6 +69,7 @@ public class OpportunitiesController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = Roles.Admin)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
