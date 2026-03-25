@@ -2,6 +2,7 @@ using CRM.API.Auth;
 using CRM.API.Middleware;
 using CRM.Application;
 using CRM.Infrastructure;
+using CRM.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -74,6 +75,9 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+// Seed database
+await SeedData.InitialiseAsync(app.Services);
 
 // Middleware pipeline
 app.UseMiddleware<ExceptionHandlingMiddleware>();
