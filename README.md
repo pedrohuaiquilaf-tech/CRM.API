@@ -198,7 +198,7 @@ Passwords are stored as PBKDF2-SHA256 hashes (100,000 iterations, 16-byte salt) 
 Requires Docker Desktop or Docker Engine with Compose v2.
 
 ```bash
-git clone https://github.com/your-username/CRM.API.git
+git clone https://github.com/pedrohuaiquilaf-tech/CRM.API.git
 cd CRM.API
 docker compose up --build
 ```
